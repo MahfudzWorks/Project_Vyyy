@@ -100,20 +100,39 @@
         {{-- Content --}}
         <div class="flex-1 flex flex-col">
 
-            {{-- Topbar --}}
-            <header class="bg-white shadow h-16 flex items-center px-6">
+            <header class="bg-white shadow h-16 flex items-center justify-between px-6">
 
-                <button
-                    id="toggleSidebar"
-                    class="text-2xl mr-4">
+                <div class="flex items-center gap-4">
 
-                    ☰
+                    <button
+                        id="toggleSidebar"
+                        class="text-2xl">
 
-                </button>
+                        ☰
 
-                <h1 class="font-semibold">
-                    Admin Panel
-                </h1>
+                    </button>
+
+                    <h1 class="font-semibold">
+                        Admin Panel
+                    </h1>
+
+                </div>
+
+                {{-- PROFILE + USER INFO --}}
+                <div class="flex items-center gap-4">
+
+                    <span class="text-gray-600">
+                        👋 {{ Auth::user()->name }}
+                    </span>
+
+                    <a href="{{ route('profile.edit') }}"
+                        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
+
+                        Profile
+
+                    </a>
+
+                </div>
 
             </header>
 
