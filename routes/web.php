@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
     // ADMIN ONLY
     Route::prefix('admin')->group(function () {
 
+        // Users
         Route::get('/users', [UserController::class, 'index'])
             ->name('admin.users.index');
 
@@ -47,6 +48,10 @@ Route::middleware(['auth'])->group(function () {
 
         Route::delete('/users/{user}', [UserController::class, 'destroy'])
             ->name('admin.users.destroy');
+
+        // Orders
+        Route::resource('orders', OrderController::class)
+            ->names('admin.orders.index');
     });
 });
 

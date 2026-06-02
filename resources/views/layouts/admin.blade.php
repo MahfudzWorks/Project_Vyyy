@@ -44,7 +44,7 @@
 
                 </a>
 
-                <a href="#"
+                <a href="{{ route('admin.orders.index') }}"
                     class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800">
 
                     <span>📦</span>
