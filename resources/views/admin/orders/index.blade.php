@@ -34,24 +34,56 @@
 
       <tbody>
 
+        @forelse($orders as $order)
+
         <tr class="border-b">
 
-          <td class="p-3">1</td>
-          <td class="p-3">Mahfudz</td>
-          <td class="p-3">Makalah</td>
-          <td class="p-3">10 Juni 2026</td>
-          <td class="p-3">Rp 50.000</td>
+          <td class="p-3">{{ $loop->iteration }}</td>
+
+          <td class="p-3">{{ $order->user->name }}</td>
+
+          <td class="p-3">{{ $order->judul }}</td>
 
           <td class="p-3">
-            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">
-              Konsultasi
+            {{ \Carbon\Carbon::parse($order->deadline)->format('d M Y') }}
+          </td>
+
+          <td class="p-3">
+            Rp {{ number_format($order->harga, 0, ',', '.') }}
+          </td>
+
+          <td class="p-3">
+
+            @php
+            $badge = match($order->status){
+            'pending' => 'bg-gray-100 text-gray-700',
+            'konsultasi' => 'bg-yellow-100 text-yellow-700',
+            'menunggu_pembayaran' => 'bg-orange-100 text-orange-700',
+            'diproses' => 'bg-blue-100 text-blue-700',
+            'revisi' => 'bg-purple-100 text-purple-700',
+            'selesai' => 'bg-green-100 text-green-700',
+            'dibatalkan' => 'bg-red-100 text-red-700',
+            default => 'bg-gray-100 text-gray-700'
+            };
+            @endphp
+
+            <span class="{{ $badge }} px-3 py-1 rounded-full text-sm">
+              {{ ucfirst(str_replace('_',' ',$order->status)) }}
             </span>
+
           </td>
 
           <td class="p-3 text-center">
 
             <button
-              onclick="openModal()"
+              onclick="openModal(
+          '{{ addslashes($order->user->name) }}',
+          '{{ addslashes($order->judul) }}',
+          '{{ $order->deadline }}',
+          '{{ $order->harga }}',
+          '{{ ucfirst(str_replace('_',' ',$order->status)) }}',
+          `{{ addslashes($order->deskripsi) }}`
+        )"
               class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg">
               Detail
             </button>
@@ -59,6 +91,16 @@
           </td>
 
         </tr>
+
+        @empty
+
+        <tr>
+          <td colspan="7" class="text-center p-6 text-gray-500">
+            Belum ada order
+          </td>
+        </tr>
+
+        @endforelse
 
       </tbody>
 
@@ -85,24 +127,22 @@
 
             <div>
               <p class="text-gray-500 text-sm">Customer</p>
-              <p class="font-semibold">Mahfudz</p>
+              <p id="modalCustomer" class="font-semibold"></p>
             </div>
 
             <div>
               <p class="text-gray-500 text-sm">Layanan</p>
-              <p class="font-semibold">Makalah</p>
+              <p id="modalJudul" class="font-semibold"></p>
             </div>
 
             <div>
               <p class="text-gray-500 text-sm">Deadline</p>
-              <p class="font-semibold">10 Juni 2026</p>
+              <p id="modalDeadline" class="font-semibold"></p>
             </div>
 
             <div>
               <p class="text-gray-500 text-sm">Harga</p>
-              <p class="font-semibold text-green-600">
-                Rp 50.000
-              </p>
+              <p id="modalHarga" class="font-semibold text-green-600"></p>
             </div>
 
           </div>
@@ -110,16 +150,16 @@
           <div class="mt-5">
             <p class="text-gray-500 text-sm mb-2">Status</p>
 
-            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">
-              Konsultasi
+            <span id="modalStatus"
+              class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">
             </span>
           </div>
 
           <div class="mt-5">
             <p class="text-gray-500 text-sm mb-2">Deskripsi</p>
 
-            <div class="bg-gray-50 border rounded-lg p-4">
-              Pembuatan makalah 10 halaman dengan tema Sistem Informasi Manajemen.
+            <div id="modalDeskripsi"
+              class="bg-gray-50 border rounded-lg p-4">
             </div>
           </div>
 
@@ -149,16 +189,30 @@
 </div>
 
 <script>
-  function openModal() {
-    const modal = document.getElementById('detailModal');
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
+  function openModal(customer, judul, deadline, harga, status, deskripsi) {
+    document.getElementById('modalCustomer').innerText = customer;
+    document.getElementById('modalJudul').innerText = judul;
+    document.getElementById('modalDeadline').innerText = deadline;
+
+    document.getElementById('modalHarga').innerText =
+      'Rp ' + Number(harga).toLocaleString('id-ID');
+
+    document.getElementById('modalStatus').innerText = status;
+    document.getElementById('modalDeskripsi').innerText = deskripsi;
+
+    document.getElementById('detailModal')
+      .classList.remove('hidden');
+
+    document.getElementById('detailModal')
+      .classList.add('flex');
   }
 
   function closeModal() {
-    const modal = document.getElementById('detailModal');
-    modal.classList.remove('flex');
-    modal.classList.add('hidden');
+    document.getElementById('detailModal')
+      .classList.remove('flex');
+
+    document.getElementById('detailModal')
+      .classList.add('hidden');
   }
 </script>
 
