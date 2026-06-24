@@ -42,7 +42,7 @@
             <label>Role</label>
             <select name="role" class="w-full border p-2 rounded">
                 <option value="admin">Admin</option>
-                <option value="customer">Customer</option>
+                <option value="user">Customer</option>
             </select>
         </div>
 

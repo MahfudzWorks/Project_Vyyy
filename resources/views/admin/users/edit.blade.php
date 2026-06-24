@@ -43,7 +43,7 @@
                     Admin
                 </option>
 
-                <option value="customer" {{ $user->role == 'customer' ? 'selected' : '' }}>
+                <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>
                     Customer
                 </option>
 

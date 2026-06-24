@@ -1,10 +1,20 @@
-<?php
+Schema::create('consultations', function (Blueprint $table) {
 
-namespace App\Models;
+$table->id();
 
-use Illuminate\Database\Eloquent\Model;
+$table->foreignId('order_id')
+->constrained()
+->cascadeOnDelete();
 
-class Consultation extends Model
-{
-    //
-}
+$table->string('topik');
+
+$table->text('catatan')->nullable();
+
+$table->enum('status', [
+'pending',
+'berlangsung',
+'selesai'
+])->default('pending');
+
+$table->timestamps();
+});

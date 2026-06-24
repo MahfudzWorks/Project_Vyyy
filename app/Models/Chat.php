@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Chat extends Model
 {
+    protected $fillable = [
+        'order_id',
+        'user_id',
+        'message',
+    ];
+
     public function order()
     {
         return $this->belongsTo(Order::class);
