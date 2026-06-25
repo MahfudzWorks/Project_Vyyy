@@ -58,6 +58,21 @@ Route::middleware(['auth'])->group(function () {
         // FAQ
         Route::get('/faq', [FaqController::class, 'index'])
             ->name('admin.faq.index');
+
+        Route::get('/faq/create', [FaqController::class, 'create'])
+            ->name('admin.faq.create');
+
+        Route::post('/faq', [FaqController::class, 'store'])
+            ->name('admin.faq.store');
+
+        Route::get('/faq/{faq}/edit', [FaqController::class, 'edit'])
+            ->name('admin.faq.edit');
+
+        Route::put('/faq/{faq}', [FaqController::class, 'update'])
+            ->name('admin.faq.update');
+
+        Route::delete('/faq/{faq}', [FaqController::class, 'destroy'])
+            ->name('admin.faq.destroy');
     });
 });
 
