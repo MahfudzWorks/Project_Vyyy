@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,10 @@ Route::middleware(['auth'])->group(function () {
         // Orders
         Route::get('/orders', [OrderController::class, 'index'])
             ->name('admin.orders.index');
+
+        // FAQ
+        Route::get('/faq', [FaqController::class, 'index'])
+            ->name('admin.faq.index');
     });
 });
 
