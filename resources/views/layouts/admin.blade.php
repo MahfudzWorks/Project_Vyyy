@@ -9,27 +9,50 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-slate-100">
 
     <div class="flex h-screen">
 
         {{-- Sidebar --}}
         <aside
             id="sidebar"
-            class="bg-slate-900 text-white w-64 transition-all duration-300 flex flex-col">
+            class="bg-gradient-to-b from-blue-700 via-blue-800 to-indigo-900 text-white w-64 transition-all duration-300 flex flex-col">
 
             {{-- Logo --}}
-            <div class="h-16 flex items-center justify-center border-b border-slate-700">
-                <span id="logoText" class="font-bold text-xl">
-                    VYYY Admin
-                </span>
+            <div class="h-16 flex items-center px-5 border-b border-blue-800">
+
+                {{-- Icon Logo (tetap tampil) --}}
+                <div
+                    class="w-11 h-11 min-w-[44px] rounded-xl bg-white text-blue-700
+               flex items-center justify-center font-bold text-xl shadow">
+
+                    V
+
+                </div>
+
+                {{-- Tulisan --}}
+                <div id="logoText" class="ml-3 transition-all duration-300">
+
+                    <h1 class="font-bold text-lg whitespace-nowrap">
+                        VYYY Admin
+                    </h1>
+
+                    <p class="text-xs text-blue-200 whitespace-nowrap">
+                        Management Panel
+                    </p>
+
+                </div>
+
             </div>
 
             {{-- Menu --}}
             <nav class="flex-1 p-4 space-y-2">
 
                 <a href="{{ route('dashboard') }}"
-                    class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800">
+                    class="flex items-center gap-3 px-4 py-3 rounded-lg transition
+                    {{ request()->routeIs('dashboard')
+                        ? 'bg-blue-600 text-white shadow'
+                        : 'hover:bg-slate-800 text-slate-300' }}">
 
                     <span>🏠</span>
                     <span class="menu-text">Dashboard</span>
@@ -37,7 +60,10 @@
                 </a>
 
                 <a href="{{ route('admin.users.index') }}"
-                    class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800">
+                    class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 
+                    {{ request()->routeIs('admin.users.*')
+                        ? 'bg-blue-600 text-white shadow'
+                        : 'hover:bg-slate-800 text-slate-300' }}">
 
                     <span>👤</span>
                     <span class="menu-text">User</span>
@@ -45,7 +71,10 @@
                 </a>
 
                 <a href="{{ route('admin.orders.index') }}"
-                    class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800">
+                    class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 
+                    {{ request()->routeIs('admin.orders.*')
+                        ? 'bg-blue-600 text-white shadow'
+                        : 'hover:bg-slate-800 text-slate-300' }}">
 
                     <span>📦</span>
                     <span class="menu-text">Order</span>
@@ -61,7 +90,10 @@
                 </a>
 
                 <a href="{{ route('admin.faq.index') }}"
-                    class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800">
+                    class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 
+                    {{ request()->routeIs('admin.faq.*')
+                        ? 'bg-blue-600 text-white shadow'
+                        : 'hover:bg-slate-800 text-slate-300' }}">
 
                     <span>❓</span>
                     <span class="menu-text">FAQ</span>
@@ -86,11 +118,30 @@
 
                     <button
                         type="submit"
-                        class="w-full bg-red-500 hover:bg-red-600 py-2 rounded-lg">
+                        class="w-full flex items-center justify-center gap-3 bg-red-500 hover:bg-red-600 py-3 rounded-xl transition">
 
-                        Logout
+                        {{-- Icon --}}
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+
+                            <path stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2
+                    2H6a2 2 0 01-2-2V7a2 2 0
+                    012-2h5a2 2 0 012 2v1" />
+
+                        </svg>
+
+                        <span class="menu-text">
+                            Logout
+                        </span>
 
                     </button>
+
                 </form>
 
             </div>
@@ -102,35 +153,214 @@
 
             <header class="bg-white shadow h-16 flex items-center justify-between px-6">
 
+                {{-- Left Menu --}}
                 <div class="flex items-center gap-4">
 
-                    <button
-                        id="toggleSidebar"
-                        class="text-2xl">
+                    {{-- Toggle Sidebar --}}
+                    <button id="toggleSidebar"
+                        class="p-2 rounded-xl hover:bg-slate-100 transition">
 
-                        ☰
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-6 h-6 text-slate-700"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+
+                            <path stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+
+                        </svg>
 
                     </button>
 
-                    <h1 class="font-semibold">
-                        Admin Panel
-                    </h1>
+                    {{-- Judul --}}
+                    <div>
+
+                        <h1 class="text-lg font-bold text-slate-800">
+                            Dashboard Admin
+                        </h1>
+
+                        <p class="text-xs text-slate-500">
+                            {{ now()->translatedFormat('l, d F Y') }}
+                        </p>
+
+                    </div>
 
                 </div>
 
-                {{-- PROFILE + USER INFO --}}
+                {{-- Search --}}
+                <div class="hidden lg:flex relative">
+
+                    <input
+                        type="text"
+                        placeholder="Cari menu..."
+                        class="w-80 rounded-xl bg-slate-100 border-none pl-10 py-2 focus:ring-2 focus:ring-blue-500">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="w-5 h-5 absolute left-3 top-2.5 text-gray-400"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor">
+
+                        <path stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 105.5 5.5a7.5 7.5 0 0011.15 11.15z" />
+
+                    </svg>
+
+                </div>
+
+                {{-- Right Menu --}}
                 <div class="flex items-center gap-4">
 
-                    <span class="text-gray-600">
-                        👋 {{ Auth::user()->name }}
-                    </span>
+                    {{-- Notification --}}
+                    <div class="relative">
 
+                        <button id="notifButton"
+                            class="relative p-2 rounded-xl hover:bg-slate-100 transition">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-6 h-6 text-slate-600"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor">
+
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M15 17h5l-1.405-1.405A2.032
+                    2.032 0 0118 14.158V11a6.002
+                    6.002 0 00-4-5.659V5a2
+                    2 0 10-4 0v.341C7.67
+                    6.165 6 8.388 6 11v3.159c0
+                    .538-.214 1.055-.595
+                    1.436L4 17h5m6
+                    0v1a3 3 0
+                    11-6 0v-1m6
+                    0H9" />
+
+                            </svg>
+
+                            @if($notifications->count())
+                            <span
+                                class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">
+
+                                {{ $notifications->count() }}
+
+                            </span>
+                            @endif
+
+                        </button>
+
+                        {{-- Dropdown Notification --}}
+                        <div id="notifDropdown"
+                            class="hidden absolute right-0 mt-3 w-80 bg-white rounded-xl shadow-xl border z-50">
+
+                            <div class="px-4 py-3 border-b font-semibold">
+                                🔔 Notifikasi
+                            </div>
+
+                            @forelse($notifications as $item)
+
+                            <a href="{{ route('admin.orders.index') }}"
+                                class="block px-4 py-3 hover:bg-slate-50">
+
+                                <p class="font-medium">
+                                    {{ $item->user->name }}
+                                </p>
+
+                                <p class="text-sm text-gray-500">
+                                    Order "{{ $item->judul }}"
+                                </p>
+
+                            </a>
+
+                            @empty
+
+                            <div class="p-5 text-center text-gray-500">
+                                Tidak ada notifikasi
+                            </div>
+
+                            @endforelse
+
+                        </div>
+
+                    </div>
+
+                    {{-- Settings --}}
                     <a href="{{ route('profile.edit') }}"
-                        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
+                        class="p-2 rounded-xl hover:bg-slate-100 transition"
+                        title="Pengaturan">
 
-                        Profile
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-6 h-6 text-slate-600"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+
+                            <path stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M11.983 13.938a2 2 0 100-3.876 2 2 0 000 3.876z" />
+
+                            <path stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2
+                2 0 11-2.83 2.83l-.06-.06a1.65
+                1.65 0 00-1.82-.33 1.65
+                1.65 0 00-1 1.51V21a2
+                2 0 11-4 0v-.09a1.65
+                1.65 0 00-1-1.51 1.65
+                1.65 0 00-1.82.33l-.06.06a2
+                2 0 11-2.83-2.83l.06-.06a1.65
+                1.65 0 00.33-1.82 1.65
+                1.65 0 00-1.51-1H3a2
+                2 0 110-4h.09a1.65
+                1.65 0 001.51-1 1.65
+                1.65 0 00-.33-1.82l-.06-.06a2
+                2 0 112.83-2.83l.06.06a1.65
+                1.65 0 001.82.33h.01A1.65
+                1.65 0 009 3.09V3a2
+                2 0 114 0v.09a1.65
+                1.65 0 001 1.51 1.65
+                1.65 0 001.82-.33l.06-.06a2
+                2 0 112.83 2.83l-.06.06a1.65
+                1.65 0 00-.33 1.82v.01A1.65
+                1.65 0 0020.91 11H21a2
+                2 0 110 4h-.09a1.65
+                1.65 0 00-1.51 1z" />
+
+                        </svg>
 
                     </a>
+
+                    {{-- Avatar --}}
+                    <div class="flex items-center gap-3">
+
+                        <div
+                            class="w-11 h-11 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white flex items-center justify-center font-bold shadow-lg">
+
+                            {{ strtoupper(substr(Auth::user()->name,0,1)) }}
+
+                        </div>
+
+                        <div>
+
+                            <p class="font-semibold">
+                                {{ Auth::user()->name }}
+                            </p>
+
+                            <p class="text-xs text-gray-500">
+                                Administrator
+                            </p>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
@@ -165,9 +395,10 @@
 
                 logoText.classList.add('hidden');
 
-                menuText.forEach(item => {
-                    item.classList.add('hidden');
-                });
+                logoText.parentElement.classList.remove('px-5');
+                logoText.parentElement.classList.add('justify-center');
+
+                menuText.forEach(item => item.classList.add('hidden'));
 
             } else {
 
@@ -176,13 +407,35 @@
 
                 logoText.classList.remove('hidden');
 
-                menuText.forEach(item => {
-                    item.classList.remove('hidden');
-                });
+                logoText.parentElement.classList.remove('justify-center');
+                logoText.parentElement.classList.add('px-5');
+
+                menuText.forEach(item => item.classList.remove('hidden'));
 
             }
 
         });
+
+        const notifButton = document.getElementById('notifButton');
+        const notifDropdown = document.getElementById('notifDropdown');
+
+        if (notifButton && notifDropdown) {
+
+            notifButton.addEventListener('click', function(e) {
+
+                e.stopPropagation();
+
+                notifDropdown.classList.toggle('hidden');
+
+            });
+
+            document.addEventListener('click', function() {
+
+                notifDropdown.classList.add('hidden');
+
+            });
+
+        }
     </script>
 
 </body>
