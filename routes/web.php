@@ -3,8 +3,10 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
+use App\Models\Testimonial;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -79,6 +81,25 @@ Route::middleware(['auth'])->group(function () {
 
         Route::delete('/faq/{faq}', [FaqController::class, 'destroy'])
             ->name('admin.faq.destroy');
+
+        // Testimonial
+        Route::get('/testimonial', [TestimonialController::class, 'index'])
+            ->name('admin.testimonial.index');
+
+        Route::get('/testimonial/create', [TestimonialController::class, 'create'])
+            ->name('admin.testimonial.create');
+
+        Route::post('/testimonial', [TestimonialController::class, 'store'])
+            ->name('admin.testimonial.store');
+
+        Route::get('/testimonial/{testimonial}/edit', [TestimonialController::class, 'edit'])
+            ->name('admin.testimonial.edit');
+
+        Route::put('/testimonial/{testimonial}', [TestimonialController::class, 'update'])
+            ->name('admin.testimonial.update');
+
+        Route::delete('/testimonial/{testimonial}', [TestimonialController::class, 'destroy'])
+            ->name('admin.testimonial.destroy');
     });
 });
 

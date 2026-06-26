@@ -6,5 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Testimonial extends Model
 {
-    //
+    protected $fillable = [
+        'user_id',
+        'message',
+        'rating',
+        'photo',
+        'is_active',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
