@@ -12,19 +12,18 @@
     </p>
 
     <h1 class="text-3xl font-bold text-slate-800 mt-1">
-      Edit FAQ
+      Tambah FAQ
     </h1>
 
     <p class="text-slate-500 mt-2">
-      Perbarui data FAQ yang sudah ada.
+      Tambahkan pertanyaan yang akan tampil di halaman FAQ website.
     </p>
 
   </div>
 
-  <form action="{{ route('admin.faq.update',$faq) }}" method="POST">
+  <form action="{{ route('admin.faq.store') }}" method="POST">
 
     @csrf
-    @method('PUT')
 
     <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
 
@@ -32,11 +31,11 @@
       <div class="bg-gradient-to-r from-blue-600 to-cyan-500 p-8">
 
         <h2 class="text-2xl font-bold text-white">
-          Form Edit FAQ
+          Form FAQ
         </h2>
 
         <p class="text-blue-100 mt-2">
-          Ubah data sesuai kebutuhan.
+          Lengkapi data pertanyaan dan jawaban.
         </p>
 
       </div>
@@ -53,9 +52,9 @@
           <input
             type="text"
             name="question"
-            value="{{ old('question',$faq->question) }}"
             class="w-full h-14 rounded-2xl border-slate-300 px-5 focus:ring-2 focus:ring-blue-500"
-            placeholder="Masukkan pertanyaan">
+            placeholder="Masukkan pertanyaan"
+            required>
 
         </div>
 
@@ -70,7 +69,8 @@
             name="answer"
             rows="7"
             class="w-full rounded-2xl border-slate-300 p-5 focus:ring-2 focus:ring-blue-500"
-            placeholder="Masukkan jawaban">{{ old('answer',$faq->answer) }}</textarea>
+            placeholder="Masukkan jawaban"
+            required></textarea>
 
         </div>
 
@@ -84,7 +84,7 @@
           <input
             type="number"
             name="sort_order"
-            value="{{ old('sort_order',$faq->sort_order) }}"
+            value="1"
             class="w-40 h-14 rounded-2xl border-slate-300 px-5 focus:ring-2 focus:ring-blue-500">
 
         </div>
@@ -104,7 +104,7 @@
               <input
                 type="checkbox"
                 name="is_active"
-                {{ $faq->is_active ? 'checked' : '' }}>
+                checked>
 
               Aktif
 
@@ -130,7 +130,7 @@
         <button
           class="px-8 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg hover:scale-105 transition">
 
-          Update FAQ
+          Simpan FAQ
 
         </button>
 
