@@ -2,81 +2,172 @@
 
 @section('content')
 
-<div class="bg-white rounded-xl shadow p-6">
+<div class="space-y-8">
 
-  <div class="flex justify-between items-center mb-6">
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between">
 
-    <h2 class="text-2xl font-bold">
-      Manajemen Order
-    </h2>
+    <div>
+      <h1 class="text-3xl font-bold text-slate-800">
+        Manajemen Order
+      </h1>
+
+      <p class="text-slate-500 mt-1">
+        Kelola seluruh pesanan pelanggan dengan mudah.
+      </p>
+    </div>
 
   </div>
 
-  <div class="overflow-x-auto">
+  <div class="grid md:grid-cols-4 gap-6">
 
-    <table class="w-full border-collapse">
+    <div class="bg-white rounded-3xl shadow-lg hover:shadow-xl transition p-6 border border-slate-100">
+      <div class="flex justify-between">
 
-      <thead>
+        <div>
+          <p class="text-slate-500">Total Order</p>
+          <h2 class="text-4xl font-bold mt-2">
+            {{ $orders->count() }}
+          </h2>
+        </div>
 
-        <tr class="bg-gray-100">
+        <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-2xl">
+          📦
+        </div>
 
-          <th class="p-3 text-left">#</th>
-          <th class="p-3 text-left">Customer</th>
-          <th class="p-3 text-left">Layanan</th>
-          <th class="p-3 text-left">Deadline</th>
-          <th class="p-3 text-left">Harga</th>
-          <th class="p-3 text-left">Status</th>
-          <th class="p-3 text-center">Aksi</th>
+      </div>
+    </div>
 
-        </tr>
+    <div class="bg-white rounded-3xl shadow-lg hover:shadow-xl transition p-6 border border-slate-100">
 
-      </thead>
+      <div class="flex justify-between">
 
-      <tbody>
+        <div>
+          <p class="text-slate-500">Diproses</p>
+          <h2 class="text-4xl font-bold text-blue-600 mt-2">
+            {{ $orders->where('status','diproses')->count() }}
+          </h2>
+        </div>
 
-        @forelse($orders as $order)
+        <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-2xl">
+          ⚙️
+        </div>
 
-        <tr class="border-b">
+      </div>
 
-          <td class="p-3">{{ $loop->iteration }}</td>
+    </div>
 
-          <td class="p-3">{{ $order->user->name }}</td>
+    <div class="bg-white rounded-3xl shadow-lg hover:shadow-xl transition p-6 border border-slate-100">
 
-          <td class="p-3">{{ $order->judul }}</td>
+      <div class="flex justify-between">
 
-          <td class="p-3">
-            {{ \Carbon\Carbon::parse($order->deadline)->format('d M Y') }}
-          </td>
+        <div>
+          <p class="text-slate-500">Selesai</p>
+          <h2 class="text-4xl font-bold text-green-600 mt-2">
+            {{ $orders->where('status','selesai')->count() }}
+          </h2>
+        </div>
 
-          <td class="p-3">
-            Rp {{ number_format($order->harga, 0, ',', '.') }}
-          </td>
+        <div class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center text-2xl">
+          ✅
+        </div>
 
-          <td class="p-3">
+      </div>
 
-            @php
-            $badge = match($order->status){
-            'pending' => 'bg-gray-100 text-gray-700',
-            'konsultasi' => 'bg-yellow-100 text-yellow-700',
-            'menunggu_pembayaran' => 'bg-orange-100 text-orange-700',
-            'diproses' => 'bg-blue-100 text-blue-700',
-            'revisi' => 'bg-purple-100 text-purple-700',
-            'selesai' => 'bg-green-100 text-green-700',
-            'dibatalkan' => 'bg-red-100 text-red-700',
-            default => 'bg-gray-100 text-gray-700'
-            };
-            @endphp
+    </div>
 
-            <span class="{{ $badge }} px-3 py-1 rounded-full text-sm">
-              {{ ucfirst(str_replace('_',' ',$order->status)) }}
-            </span>
+    <div class="bg-white rounded-3xl shadow-lg hover:shadow-xl transition p-6 border border-slate-100">
 
-          </td>
+      <div class="flex justify-between">
 
-          <td class="p-3 text-center">
+        <div>
+          <p class="text-slate-500">Pending</p>
+          <h2 class="text-4xl font-bold text-orange-600 mt-2">
+            {{ $orders->where('status','pending')->count() }}
+          </h2>
+        </div>
 
-            <button
-              onclick="openModal(
+        <div class="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center text-2xl">
+          ⏳
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="bg-white rounded-3xl shadow-lg border border-slate-100 overflow-hidden">
+
+    <div class="overflow-x-auto">
+
+      <table class="w-full border-collapse">
+
+        <thead class="bg-slate-50">
+
+          <tr>
+
+            <th class="px-6 py-4 text-left text-sm font-semibold text-slate-600">#</th>
+            <th class="px-6 py-4 text-left text-sm font-semibold text-slate-600">Customer</th>
+            <th class="px-6 py-4 text-left text-sm font-semibold text-slate-600">Layanan</th>
+            <th class="px-6 py-4 text-left text-sm font-semibold text-slate-600">Deadline</th>
+            <th class="px-6 py-4 text-left text-sm font-semibold text-slate-600">Harga</th>
+            <th class="px-6 py-4 text-left text-sm font-semibold text-slate-600">Status</th>
+            <th class="px-6 py-4 text-left text-sm font-semibold text-slate-600">Aksi</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          @forelse($orders as $order)
+
+          <tr class="border-t hover:bg-slate-50 transition">
+
+            <td class="px-6 py-5">{{ $loop->iteration }}</td>
+
+            <td class="px-6 py-5">{{ $order->user->name }}</td>
+
+            <td class="px-6 py-5">{{ $order->judul }}</td>
+
+            <td class="px-6 py-5">
+              <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">
+                {{ \Carbon\Carbon::parse($order->deadline)->format('d M Y') }}
+              </span>
+
+            </td>
+
+            <td class="px-6 py-5">
+              <span class="font-bold text-green-600">
+                Rp {{ number_format($order->harga,0,',','.') }}
+              </span>
+            </td>
+
+            <td class="px-6 py-5">
+
+              @php
+              $badge = match($order->status){
+              'pending' => 'bg-gray-100 text-gray-700',
+              'konsultasi' => 'bg-yellow-100 text-yellow-700',
+              'menunggu_pembayaran' => 'bg-orange-100 text-orange-700',
+              'diproses' => 'bg-blue-100 text-blue-700',
+              'revisi' => 'bg-purple-100 text-purple-700',
+              'selesai' => 'bg-green-100 text-green-700',
+              'dibatalkan' => 'bg-red-100 text-red-700',
+              default => 'bg-gray-100 text-gray-700'
+              };
+              @endphp
+
+              <span class="{{ $badge }} px-3 py-1 rounded-full text-sm">
+                {{ ucfirst(str_replace('_',' ',$order->status)) }}
+              </span>
+
+            </td>
+
+            <td class="p-3 text-center">
+
+              <button
+                onclick="openModal(
           '{{ addslashes($order->user->name) }}',
           '{{ addslashes($order->judul) }}',
           '{{ $order->deadline }}',
@@ -84,99 +175,119 @@
           '{{ ucfirst(str_replace('_',' ',$order->status)) }}',
           `{{ addslashes($order->deskripsi) }}`
         )"
-              class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg">
-              Detail
+                class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 hover:bg-blue-600 hover:text-white transition">
+                👁
+              </button>
+
+            </td>
+
+          </tr>
+
+          @empty
+
+          <tr>
+
+            <td colspan="7" class="py-20">
+
+              <div class="text-center">
+
+                <div class="text-7xl">
+                  📦
+                </div>
+
+                <h3 class="mt-4 text-2xl font-bold text-slate-700">
+                  Belum Ada Order
+                </h3>
+
+                <p class="text-slate-500 mt-2">
+                  Pesanan pelanggan akan muncul di halaman ini.
+                </p>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+          @endforelse
+
+        </tbody>
+
+      </table>
+
+      <!-- Modal -->
+      <div id="detailModal"
+        class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl mx-4">
+
+          <div class="flex justify-between items-center border-b p-5">
+            <h3 class="text-xl font-bold">Detail Order</h3>
+
+            <button onclick="closeModal()"
+              class="text-gray-500 hover:text-red-500 text-2xl">
+              &times;
+            </button>
+          </div>
+
+          <div class="p-8 space-y-6">
+
+            <div class="grid grid-cols-2 gap-4">
+
+              <div>
+                <p class="text-gray-500 text-sm">Customer</p>
+                <p id="modalCustomer" class="font-semibold"></p>
+              </div>
+
+              <div>
+                <p class="text-gray-500 text-sm">Layanan</p>
+                <p id="modalJudul" class="font-semibold"></p>
+              </div>
+
+              <div>
+                <p class="text-gray-500 text-sm">Deadline</p>
+                <p id="modalDeadline" class="font-semibold"></p>
+              </div>
+
+              <div>
+                <p class="text-gray-500 text-sm">Harga</p>
+                <p id="modalHarga" class="font-semibold text-green-600"></p>
+              </div>
+
+            </div>
+
+            <div class="mt-5">
+              <p class="text-gray-500 text-sm mb-2">Status</p>
+
+              <span id="modalStatus"
+                class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">
+              </span>
+            </div>
+
+            <div class="mt-5">
+              <p class="text-gray-500 text-sm mb-2">Deskripsi</p>
+
+              <div id="modalDeskripsi"
+                class="bg-slate-50 rounded-2xl border p-5 whitespace-pre-line leading-7">
+              </div>
+            </div>
+
+          </div>
+
+          <div class="border-t p-4 flex justify-end gap-2">
+
+            <button
+              onclick="closeModal()"
+              class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
+              Tutup
             </button>
 
-          </td>
-
-        </tr>
-
-        @empty
-
-        <tr>
-          <td colspan="7" class="text-center p-6 text-gray-500">
-            Belum ada order
-          </td>
-        </tr>
-
-        @endforelse
-
-      </tbody>
-
-    </table>
-
-    <!-- Modal -->
-    <div id="detailModal"
-      class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
-
-      <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl mx-4">
-
-        <div class="flex justify-between items-center border-b p-5">
-          <h3 class="text-xl font-bold">Detail Order</h3>
-
-          <button onclick="closeModal()"
-            class="text-gray-500 hover:text-red-500 text-2xl">
-            &times;
-          </button>
-        </div>
-
-        <div class="p-6">
-
-          <div class="grid grid-cols-2 gap-4">
-
-            <div>
-              <p class="text-gray-500 text-sm">Customer</p>
-              <p id="modalCustomer" class="font-semibold"></p>
-            </div>
-
-            <div>
-              <p class="text-gray-500 text-sm">Layanan</p>
-              <p id="modalJudul" class="font-semibold"></p>
-            </div>
-
-            <div>
-              <p class="text-gray-500 text-sm">Deadline</p>
-              <p id="modalDeadline" class="font-semibold"></p>
-            </div>
-
-            <div>
-              <p class="text-gray-500 text-sm">Harga</p>
-              <p id="modalHarga" class="font-semibold text-green-600"></p>
-            </div>
+            <button
+              class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+              Proses
+            </button>
 
           </div>
-
-          <div class="mt-5">
-            <p class="text-gray-500 text-sm mb-2">Status</p>
-
-            <span id="modalStatus"
-              class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">
-            </span>
-          </div>
-
-          <div class="mt-5">
-            <p class="text-gray-500 text-sm mb-2">Deskripsi</p>
-
-            <div id="modalDeskripsi"
-              class="bg-gray-50 border rounded-lg p-4">
-            </div>
-          </div>
-
-        </div>
-
-        <div class="border-t p-4 flex justify-end gap-2">
-
-          <button
-            onclick="closeModal()"
-            class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
-            Tutup
-          </button>
-
-          <button
-            class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-            Proses
-          </button>
 
         </div>
 
