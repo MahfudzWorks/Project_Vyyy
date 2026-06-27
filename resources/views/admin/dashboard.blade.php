@@ -4,48 +4,205 @@
 
 <div class="space-y-6">
 
-    <div>
-        <h1 class="text-3xl font-bold text-gray-800">
-            Dashboard Admin
-        </h1>
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
 
-        <p class="text-gray-500 mt-1">
-            Selamat datang kembali, {{ Auth::user()->name }}
-        </p>
+        <div>
+            <h1 class="text-3xl font-bold text-slate-800">
+                Dashboard Admin
+            </h1>
+
+            <p class="text-slate-500 mt-2">
+                Selamat datang kembali,
+                <span class="font-semibold text-slate-700">
+                    {{ Auth::user()->name }}
+                </span>.
+                Berikut ringkasan aktivitas sistem hari ini.
+            </p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow border border-slate-100 px-5 py-3">
+
+            <p class="text-xs text-slate-500">
+                Hari Ini
+            </p>
+
+            <p class="font-bold text-slate-800">
+                {{ now()->translatedFormat('l, d F Y') }}
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="group bg-white rounded-3xl border border-slate-200 shadow-sm
+                hover:-translate-y-2 hover:shadow-2xl hover:border-emerald-300
+                transition-all duration-300 ease-out p-6 cursor-pointer">
+
+        <div class="flex justify-between">
+
+            <div>
+
+                <p class="text-slate-500">
+                    Total Penghasilan
+                </p>
+
+                <h2 class="text-3xl font-bold text-emerald-600 mt-2">
+                    Rp {{ number_format($totalRevenue,0,',','.') }}
+                </h2>
+
+                <p class="text-slate-400 text-sm mt-2">
+                    Dari seluruh order selesai
+                </p>
+
+            </div>
+
+            <div class="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center
+                        text-2xl group-hover:scale-110 group-hover:rotate-6 transition duration-300">
+                💰
+            </div>
+
+        </div>
+
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
-        <div class="bg-white rounded-xl shadow p-6 border-l-4 border-blue-500">
-            <p class="text-gray-500 text-sm">Total Order</p>
-            <h2 class="text-3xl font-bold mt-2">{{ $totalOrder ?? 0 }}</h2>
-            <p class="text-green-500 text-sm mt-2">
-                Semua pesanan
-            </p>
+        <div class="group bg-white rounded-3xl border border-slate-200 shadow-sm
+                    hover:-translate-y-2 hover:shadow-2xl hover:border-blue-300
+                    transition-all duration-300 p-6 cursor-pointer">
+            <div class="flex justify-between items-start">
+
+                <div>
+
+                    <p class="text-slate-500 text-sm">
+                        Total Order
+                    </p>
+
+                    <h2 class="text-3xl font-bold mt-2">
+                        {{ $totalOrder }}
+                    </h2>
+
+                    <p class="text-slate-400 text-sm mt-2">
+                        Semua pesanan
+                    </p>
+
+                </div>
+
+                <div
+                    class="w-14 h-14 rounded-2xl bg-blue-100 text-2xl flex items-center justify-center
+        group-hover:bg-blue-600 group-hover:text-white
+        group-hover:scale-110 group-hover:rotate-6 transition-all">
+
+                    📦
+
+                </div>
+
+            </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow p-6 border-l-4 border-yellow-500">
-            <p class="text-gray-500 text-sm">Konsultasi</p>
-            <h2 class="text-3xl font-bold mt-2">{{ $konsultasi ?? 0 }}</h2>
-            <p class="text-gray-400 text-sm mt-2">
-                Menunggu respon
-            </p>
+        <div class="group bg-white rounded-3xl border border-slate-200 shadow-sm
+                    hover:-translate-y-2 hover:shadow-2xl hover:border-yellow-300
+                    transition-all duration-300 p-6 cursor-pointer">
+
+            <div class="flex justify-between">
+
+                <div>
+
+                    <p class="text-slate-500 text-sm">
+                        Konsultasi
+                    </p>
+
+                    <h2 class="text-3xl font-bold mt-2 text-yellow-600">
+                        {{ $konsultasi }}
+                    </h2>
+
+                    <p class="text-slate-400 text-sm mt-2">
+                        Menunggu respon
+                    </p>
+
+                </div>
+
+                <div
+                    class="w-14 h-14 rounded-2xl bg-yellow-100 flex items-center justify-center text-2xl
+            group-hover:bg-yellow-500 group-hover:text-white
+            group-hover:scale-110 group-hover:rotate-6 transition-all">
+
+                    💬
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="bg-white rounded-xl shadow p-6 border-l-4 border-purple-500">
-            <p class="text-gray-500 text-sm">FAQ</p>
-            <h2 class="text-3xl font-bold mt-2">{{ $faq ?? 0 }}</h2>
-            <p class="text-gray-400 text-sm mt-2">
-                FAQ aktif
-            </p>
+        <div class="group bg-white rounded-3xl border border-slate-200 shadow-sm
+                    hover:-translate-y-2 hover:shadow-2xl hover:border-purple-300
+                    transition-all duration-300 p-6 cursor-pointer">
+
+            <div class="flex justify-between">
+
+                <div>
+
+                    <p class="text-slate-500 text-sm">
+                        FAQ
+                    </p>
+
+                    <h2 class="text-3xl font-bold mt-2 text-purple-600">
+                        {{ $faq }}
+                    </h2>
+
+                    <p class="text-slate-400 text-sm mt-2">
+                        FAQ aktif
+                    </p>
+
+                </div>
+
+                <div
+                    class="w-14 h-14 rounded-2xl bg-purple-100 flex items-center justify-center text-2xl
+            group-hover:bg-purple-600 group-hover:text-white
+            group-hover:scale-110 group-hover:rotate-6 transition-all">
+
+                    ❓
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="bg-white rounded-xl shadow p-6 border-l-4 border-green-500">
-            <p class="text-gray-500 text-sm">User</p>
-            <h2 class="text-3xl font-bold mt-2">{{ $user ?? 0 }}</h2>
-            <p class="text-gray-400 text-sm mt-2">
-                Total pengguna
-            </p>
+        <div class="group bg-white rounded-3xl border border-slate-200 shadow-sm
+                    hover:-translate-y-2 hover:shadow-2xl hover:border-green-300
+                    transition-all duration-300 p-6 cursor-pointer">
+
+            <div class="flex justify-between">
+
+                <div>
+
+                    <p class="text-slate-500 text-sm">
+                        User
+                    </p>
+
+                    <h2 class="text-3xl font-bold mt-2 text-green-600">
+                        {{ $user }}
+                    </h2>
+
+                    <p class="text-slate-400 text-sm mt-2">
+                        Total pengguna
+                    </p>
+
+                </div>
+
+                <div
+                    class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center text-2xl
+            group-hover:bg-green-600 group-hover:text-white
+            group-hover:scale-110 group-hover:rotate-6 transition-all">
+
+                    👥
+
+                </div>
+
+            </div>
+
         </div>
 
     </div>
@@ -58,7 +215,9 @@
                 Statistik Order Bulanan
             </h3>
 
-            <canvas id="orderChart"></canvas>
+            <div class="h-80">
+                <canvas id="orderChart"></canvas>
+            </div>
 
         </div>
 
@@ -165,16 +324,79 @@
             data: {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
                 datasets: [{
-                    label: 'Jumlah Order',
+                    label: 'Order',
                     data: orderPerMonth,
+
                     borderColor: '#2563eb',
-                    backgroundColor: 'rgba(37,99,235,.15)',
+
+                    backgroundColor: 'rgba(37,99,235,.08)',
+
                     fill: true,
-                    tension: 0.35,
-                    borderWidth: 3,
-                    pointRadius: 5
+
+                    borderWidth: 4,
+
+                    tension: .45,
+
+                    pointRadius: 0,
+
+                    pointHoverRadius: 7,
+
+                    pointHoverBorderWidth: 3,
+
+                    pointBackgroundColor: '#2563eb',
+
+                    pointHoverBackgroundColor: '#ffffff',
+
+                    pointHoverBorderColor: '#2563eb'
                 }]
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    }
+
+                },
+
+                scales: {
+
+                    y: {
+                        beginAtZero: true,
+
+                        grid: {
+                            color: 'rgba(148,163,184,.15)'
+                        },
+
+                        ticks: {
+                            stepSize: 1
+                        }
+
+                    },
+
+                    x: {
+
+                        grid: {
+                            display: false
+                        }
+
+                    }
+
+                }
+
             }
+
         });
 
         const statusOrder = @json($statusOrder);

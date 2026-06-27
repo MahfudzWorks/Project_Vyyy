@@ -17,6 +17,8 @@ class DashboardController extends Controller
         $faq = Faq::count();
         $user = User::count();
         $service = Service::count();
+        $totalRevenue = Order::where('status', 'selesai')->sum('harga');
+        $pendingOrder = Order::where('status', 'pending')->count();
 
         $latestOrders = Order::with('user')
             ->latest()
@@ -33,6 +35,19 @@ class DashboardController extends Controller
 
         for ($i = 1; $i <= 12; $i++) {
             $orderPerMonth[] = $chart[$i] ?? 0;
+        }
+
+        // Grafik Penghasilan per Bulan (Order Selesai)
+        $revenueChart = Order::selectRaw('MONTH(created_at) as month, SUM(harga) as total')
+            ->whereYear('created_at', now()->year)
+            ->where('status', 'selesai')
+            ->groupBy('month')
+            ->pluck('total', 'month');
+
+        $revenuePerMonth = [];
+
+        for ($i = 1; $i <= 12; $i++) {
+            $revenuePerMonth[] = $revenueChart[$i] ?? 0;
         }
 
         // Grafik Status (1 query)
@@ -58,7 +73,10 @@ class DashboardController extends Controller
             'service',
             'latestOrders',
             'orderPerMonth',
-            'statusOrder'
+            'revenuePerMonth',
+            'statusOrder',
+            'totalRevenue',
+            'pendingOrder',
         ));
     }
 }
