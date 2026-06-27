@@ -81,8 +81,11 @@
 
                 </a>
 
-                <a href="#"
-                    class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800">
+                <a href="{{ route('admin.layanan.index') }}"
+                    class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 
+                    {{ request()->routeIs('admin.faq.*')
+                        ? 'bg-blue-600 text-white shadow'
+                        : 'hover:bg-slate-800 text-slate-300' }}">
 
                     <span>🛠️</span>
                     <span class="menu-text">Layanan</span>
@@ -99,6 +102,7 @@
                     <span class="menu-text">FAQ</span>
 
                 </a>
+
                 <a href="{{ route('admin.testimonial.index') }}"
                     class="flex items-center gap-3 px-4 py-3 rounded-lg
                     {{ request()->routeIs('admin.testimonial.*')

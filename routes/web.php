@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\LayananController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
@@ -100,6 +101,25 @@ Route::middleware(['auth'])->group(function () {
 
         Route::delete('/testimonial/{testimonial}', [TestimonialController::class, 'destroy'])
             ->name('admin.testimonial.destroy');
+
+        // Layanan
+        Route::get('/layanan', [LayananController::class, 'index'])
+            ->name('admin.layanan.index');
+
+        Route::get('/layanan/create', [LayananController::class, 'create'])
+            ->name('admin.layanan.create');
+
+        Route::post('/layanan', [LayananController::class, 'store'])
+            ->name('admin.layanan.store');
+
+        Route::get('/layanan/{service}/edit', [LayananController::class, 'edit'])
+            ->name('admin.layanan.edit');
+
+        Route::put('/layanan/{service}', [LayananController::class, 'update'])
+            ->name('admin.layanan.update');
+
+        Route::delete('/layanan/{service}', [LayananController::class, 'destroy'])
+            ->name('admin.layanan.destroy');
     });
 });
 
