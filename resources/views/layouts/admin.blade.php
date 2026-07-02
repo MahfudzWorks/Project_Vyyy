@@ -9,22 +9,22 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-slate-100">
+<body class="bg-gradient-to-br from-indigo-50 via-white to-violet-100">
 
     <div class="flex h-screen">
 
         {{-- Sidebar --}}
         <aside
             id="sidebar"
-            class="bg-gradient-to-b from-blue-700 via-blue-800 to-indigo-900 text-white w-64 transition-all duration-300 flex flex-col">
+            class="bg-gradient-to-b from-indigo-600 via-violet-600 to-purple-700 text-white w-64 transition-all duration-300 flex flex-col shadow-2xl">
 
             {{-- Logo --}}
-            <div class="h-16 flex items-center px-5 border-b border-blue-800">
+            <div class="h-16 flex items-center px-5 border-b border-white/10">
 
                 {{-- Icon Logo (tetap tampil) --}}
                 <div
-                    class="w-11 h-11 min-w-[44px] rounded-xl bg-white text-blue-700
-               flex items-center justify-center font-bold text-xl shadow">
+                    class="w-11 h-11 min-w-[44px] rounded-xl bg-white text-indigo-600
+                    flex items-center justify-center font-bold text-xl shadow-lg">
 
                     V
 
@@ -37,7 +37,7 @@
                         VYYY Admin
                     </h1>
 
-                    <p class="text-xs text-blue-200 whitespace-nowrap">
+                    <p class="text-xs text-indigo-200 whitespace-nowrap">
                         Management Panel
                     </p>
 
@@ -51,8 +51,8 @@
                 <a href="{{ route('dashboard') }}"
                     class="flex items-center gap-3 px-4 py-3 rounded-lg transition
                     {{ request()->routeIs('dashboard')
-                        ? 'bg-blue-600 text-white shadow'
-                        : 'hover:bg-slate-800 text-slate-300' }}">
+                        ? 'bg-white/20 backdrop-blur-md text-white shadow'
+                        : 'text-indigo-100 hover:bg-white/10 hover:text-white transition-all duration-200' }}">
 
                     <span>🏠</span>
                     <span class="menu-text">Dashboard</span>
@@ -62,8 +62,8 @@
                 <a href="{{ route('admin.users.index') }}"
                     class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 
                     {{ request()->routeIs('admin.users.*')
-                        ? 'bg-blue-600 text-white shadow'
-                        : 'hover:bg-slate-800 text-slate-300' }}">
+                        ? 'bg-white/20 backdrop-blur-md text-white shadow'
+                        : 'text-indigo-100 hover:bg-white/10 hover:text-white transition-all duration-200' }}">
 
                     <span>👤</span>
                     <span class="menu-text">User</span>
@@ -73,8 +73,8 @@
                 <a href="{{ route('admin.orders.index') }}"
                     class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 
                     {{ request()->routeIs('admin.orders.*')
-                        ? 'bg-blue-600 text-white shadow'
-                        : 'hover:bg-slate-800 text-slate-300' }}">
+                        ? 'bg-white/20 backdrop-blur-md text-white shadow'
+                        : 'text-indigo-100 hover:bg-white/10 hover:text-white transition-all duration-200' }}">
 
                     <span>📦</span>
                     <span class="menu-text">Order</span>
@@ -84,8 +84,8 @@
                 <a href="{{ route('admin.layanan.index') }}"
                     class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 
                     {{ request()->routeIs('admin.faq.*')
-                        ? 'bg-blue-600 text-white shadow'
-                        : 'hover:bg-slate-800 text-slate-300' }}">
+                        ? 'bg-white/20 backdrop-blur-md text-white shadow'
+                        : 'text-indigo-100 hover:bg-white/10 hover:text-white transition-all duration-200' }}">
 
                     <span>🛠️</span>
                     <span class="menu-text">Layanan</span>
@@ -95,8 +95,8 @@
                 <a href="{{ route('admin.faq.index') }}"
                     class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 
                     {{ request()->routeIs('admin.faq.*')
-                        ? 'bg-blue-600 text-white shadow'
-                        : 'hover:bg-slate-800 text-slate-300' }}">
+                        ? 'bg-white/20 backdrop-blur-md text-white shadow'
+                        : 'text-indigo-100 hover:bg-white/10 hover:text-white transition-all duration-200' }}">
 
                     <span>❓</span>
                     <span class="menu-text">FAQ</span>
@@ -106,8 +106,8 @@
                 <a href="{{ route('admin.testimonial.index') }}"
                     class="flex items-center gap-3 px-4 py-3 rounded-lg
                     {{ request()->routeIs('admin.testimonial.*')
-                        ? 'bg-blue-600 text-white shadow'
-                        : 'hover:bg-slate-800 text-slate-300' }}">
+                        ? 'bg-white/20 backdrop-blur-md text-white shadow'
+                        : 'text-indigo-100 hover:bg-white/10 hover:text-white transition-all duration-200' }}">
 
                     <span>⭐</span>
                     <span class="menu-text">Testimonial</span>
