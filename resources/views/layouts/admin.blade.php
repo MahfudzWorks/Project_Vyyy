@@ -296,73 +296,82 @@
 
                     </div>
 
-                    {{-- Settings --}}
-                    <a href="{{ route('profile.edit') }}"
-                        class="p-2 rounded-xl hover:bg-slate-100 transition"
-                        title="Pengaturan">
+                    {{-- Profile Dropdown --}}
+                    <div class="relative">
 
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-6 h-6 text-slate-600"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor">
+                        <button id="profileButton"
+                            class="flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-slate-100 transition">
 
-                            <path stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M11.983 13.938a2 2 0 100-3.876 2 2 0 000 3.876z" />
+                            <div
+                                class="w-11 h-11 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500
+            text-white flex items-center justify-center font-bold shadow-lg">
 
-                            <path stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2
-                2 0 11-2.83 2.83l-.06-.06a1.65
-                1.65 0 00-1.82-.33 1.65
-                1.65 0 00-1 1.51V21a2
-                2 0 11-4 0v-.09a1.65
-                1.65 0 00-1-1.51 1.65
-                1.65 0 00-1.82.33l-.06.06a2
-                2 0 11-2.83-2.83l.06-.06a1.65
-                1.65 0 00.33-1.82 1.65
-                1.65 0 00-1.51-1H3a2
-                2 0 110-4h.09a1.65
-                1.65 0 001.51-1 1.65
-                1.65 0 00-.33-1.82l-.06-.06a2
-                2 0 112.83-2.83l.06.06a1.65
-                1.65 0 001.82.33h.01A1.65
-                1.65 0 009 3.09V3a2
-                2 0 114 0v.09a1.65
-                1.65 0 001 1.51 1.65
-                1.65 0 001.82-.33l.06-.06a2
-                2 0 112.83 2.83l-.06.06a1.65
-                1.65 0 00-.33 1.82v.01A1.65
-                1.65 0 0020.91 11H21a2
-                2 0 110 4h-.09a1.65
-                1.65 0 00-1.51 1z" />
+                                {{ strtoupper(substr(Auth::user()->name,0,1)) }}
 
-                        </svg>
+                            </div>
 
-                    </a>
+                            <div class="hidden md:block text-left">
 
-                    {{-- Avatar --}}
-                    <div class="flex items-center gap-3">
+                                <p class="font-semibold text-slate-800">
+                                    {{ Auth::user()->name }}
+                                </p>
 
-                        <div
-                            class="w-11 h-11 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white flex items-center justify-center font-bold shadow-lg">
+                                <p class="text-xs text-slate-500">
+                                    Administrator
+                                </p>
 
-                            {{ strtoupper(substr(Auth::user()->name,0,1)) }}
+                            </div>
 
-                        </div>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-5 h-5 text-slate-500"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor">
 
-                        <div>
+                                <path stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
 
-                            <p class="font-semibold">
-                                {{ Auth::user()->name }}
-                            </p>
+                            </svg>
 
-                            <p class="text-xs text-gray-500">
-                                Administrator
-                            </p>
+                        </button>
+
+                        {{-- Dropdown --}}
+                        <div id="profileDropdown"
+                            class="hidden absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden z-50">
+
+                            <div class="px-5 py-4 border-b bg-slate-50">
+
+                                <p class="font-semibold text-slate-800">
+                                    {{ Auth::user()->name }}
+                                </p>
+
+                                <p class="text-sm text-slate-500">
+                                    {{ Auth::user()->email }}
+                                </p>
+
+                            </div>
+
+                            <a href="{{ route('profile.edit') }}"
+                                class="flex items-center gap-3 px-5 py-3 hover:bg-slate-50 transition">
+
+                                👤
+                                <span>Profile</span>
+
+                            </a>
+
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <button type="submit"
+                                    class="w-full flex items-center gap-3 px-5 py-3 text-red-600 hover:bg-red-50 transition">
+
+                                    🚪
+                                    <span>Logout</span>
+
+                                </button>
+                            </form>
 
                         </div>
 
@@ -439,6 +448,27 @@
 
                 notifDropdown.classList.add('hidden');
 
+            });
+
+        }
+
+        const profileButton = document.getElementById('profileButton');
+        const profileDropdown = document.getElementById('profileDropdown');
+
+        if (profileButton && profileDropdown) {
+
+            profileButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+
+                profileDropdown.classList.toggle('hidden');
+
+                if (notifDropdown) {
+                    notifDropdown.classList.add('hidden');
+                }
+            });
+
+            document.addEventListener('click', function() {
+                profileDropdown.classList.add('hidden');
             });
 
         }
