@@ -27,25 +27,35 @@
   </div>
 
   {{-- Statistik --}}
-  <div class="grid md:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-    <div class="bg-white rounded-3xl shadow-lg p-6 border border-slate-100">
+    {{-- Total FAQ --}}
+    <div class="group bg-white rounded-3xl border border-slate-200 shadow-sm
+                hover:-translate-y-2 hover:shadow-2xl hover:border-purple-300
+                transition-all duration-300 p-6 cursor-pointer">
 
-      <div class="flex justify-between">
+      <div class="flex justify-between items-start">
 
         <div>
 
-          <p class="text-slate-500">
+          <p class="text-slate-500 text-sm">
             Total FAQ
           </p>
 
-          <h2 class="text-4xl font-bold mt-2 text-slate-800">
+          <h2 class="text-3xl font-bold mt-2">
             {{ $faqs->count() }}
           </h2>
 
+          <p class="text-slate-400 text-sm mt-2">
+            Semua pertanyaan
+          </p>
+
         </div>
 
-        <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-2xl">
+        <div
+          class="w-14 h-14 rounded-2xl bg-purple-100 flex items-center justify-center text-2xl
+                group-hover:bg-purple-600 group-hover:text-white
+                group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
 
           ❓
 
@@ -55,23 +65,33 @@
 
     </div>
 
-    <div class="bg-white rounded-3xl shadow-lg p-6 border border-slate-100">
+    {{-- FAQ Aktif --}}
+    <div class="group bg-white rounded-3xl border border-slate-200 shadow-sm
+                hover:-translate-y-2 hover:shadow-2xl hover:border-green-300
+                transition-all duration-300 p-6 cursor-pointer">
 
-      <div class="flex justify-between">
+      <div class="flex justify-between items-start">
 
         <div>
 
-          <p class="text-slate-500">
+          <p class="text-slate-500 text-sm">
             FAQ Aktif
           </p>
 
-          <h2 class="text-4xl font-bold mt-2 text-green-600">
+          <h2 class="text-3xl font-bold mt-2 text-green-600">
             {{ $faqs->where('is_active',1)->count() }}
           </h2>
 
+          <p class="text-slate-400 text-sm mt-2">
+            Sedang ditampilkan
+          </p>
+
         </div>
 
-        <div class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center text-2xl">
+        <div
+          class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center text-2xl
+                group-hover:bg-green-600 group-hover:text-white
+                group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
 
           ✅
 
@@ -81,23 +101,33 @@
 
     </div>
 
-    <div class="bg-white rounded-3xl shadow-lg p-6 border border-slate-100">
+    {{-- FAQ Nonaktif --}}
+    <div class="group bg-white rounded-3xl border border-slate-200 shadow-sm
+                hover:-translate-y-2 hover:shadow-2xl hover:border-red-300
+                transition-all duration-300 p-6 cursor-pointer">
 
-      <div class="flex justify-between">
+      <div class="flex justify-between items-start">
 
         <div>
 
-          <p class="text-slate-500">
-            Nonaktif
+          <p class="text-slate-500 text-sm">
+            FAQ Nonaktif
           </p>
 
-          <h2 class="text-4xl font-bold mt-2 text-red-600">
+          <h2 class="text-3xl font-bold mt-2 text-red-600">
             {{ $faqs->where('is_active',0)->count() }}
           </h2>
 
+          <p class="text-slate-400 text-sm mt-2">
+            Tidak ditampilkan
+          </p>
+
         </div>
 
-        <div class="w-14 h-14 rounded-2xl bg-red-100 flex items-center justify-center text-2xl">
+        <div
+          class="w-14 h-14 rounded-2xl bg-red-100 flex items-center justify-center text-2xl
+                group-hover:bg-red-600 group-hover:text-white
+                group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
 
           🚫
 
